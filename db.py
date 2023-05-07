@@ -7,18 +7,19 @@ DB_NAME = "todoapp"
 querry = ""
 
 def initDB():
-    querry = "SHOW DATABASES LIKE %s"
+    querry = "SHOW DATABASES LIKE %s"  
     c.execute(querry,(DB_NAME,))
-    if c.fetchall() == [] : createDatabase()
+    if c.fetchall() == [] : createDatabase()    # Check if DB 'todoapp' exits
     else : readExistingDB()
 
 def readExistingDB():
     print("existing")
 
 def createDatabase():  
-    querry = "CREATE DATABASE todoapp"
+    querry = "CREATE DATABASE todoapp"  # Create table because fetch returned with empty array
     c.execute(querry)
-    db.database = "todoapp"
+
+    db.database = "todoapp" # Set DB to 'todoapp'
 
     # Create users table
     c.execute(
@@ -30,6 +31,7 @@ def createDatabase():
             PRIMARY KEY ( email )
         );"""
     )
+    # Create tasks table
     c.execute(
         """
         create table tasks (
@@ -43,5 +45,5 @@ def createDatabase():
         );"""
     )
 
-def closeConnection():
+def closeConnection():  # Close connection
     db.close()
