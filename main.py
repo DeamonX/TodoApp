@@ -1,4 +1,10 @@
 import db;
 
+
+def exitApp():
+   db.closeConnection()
+
 if __name__ == '__main__':
-    db.connectSql()
+   a = db.initDB()
+   exitApp()
+
