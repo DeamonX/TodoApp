@@ -1,29 +1,53 @@
 import db
-import tkinter
-import customtkinter
+import customtkinter as ctk
+import tkinter.messagebox as tkmb
 import asyncio
 
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
 
 def exitApp():
    db.closeConnection()
 
-def initApplication():
-    app = customtkinter.CTk()  # create CTk window like you do with the Tk window
-    customtkinter.set_default_color_theme("theme.json")
-    app.geometry("400x240")
 
-    txtUserName = customtkinter.CTkTextbox(master=app, width=100, height=10, corner_radius=0)
-    txtPassword = customtkinter.CTkTextbox(master=app, width=100, height=10, corner_radius=0)
-    btnLogin = customtkinter.CTkButton(app, text="Belépés", command=db.login(txtUserName.get("0.0", "end").replace('\n',""),txtPassword.get("0.0", "end").replace('\n',"")))
+def showLogin():
 
-    txtUserName.place(x=200, y=20, anchor=tkinter.CENTER)
-    txtPassword.place(x=200, y=60, anchor=tkinter.CENTER)
-    btnLogin.place(x=200, y=150, anchor=tkinter.CENTER)
+   login = ctk.CTk()
+   login.geometry("400x400")
+   login.title("Belépés")
+   
 
-    app.mainloop()
+   def loginFunc():
+      userInfo = db.login(user.get(),pw.get())
+      if userInfo == 0:
+         tkmb.showerror(title="Hiba!",message="Érvénytelen felhasználó vagy jelszó!")
+      else:
+         tkmb.showinfo(title="Siker!",message="Sikeres bejelentkezés!")
+         
+         login.destroy()
+
+   frame = ctk.CTkFrame(master=login)
+   frame.pack(pady=0,padx=0,fill='both',expand=True)
+   
+   label = ctk.CTkLabel(master=frame,text='Bejelentkezés')
+   label.pack(pady=12,padx=10)
+   
+   user= ctk.CTkEntry(master=frame,placeholder_text="Felhasználónév vagy email", width=200)
+   user.pack(pady=12,padx=10)
+   
+   pw= ctk.CTkEntry(master=frame,placeholder_text="Jelszó",show="*",width=200)
+   pw.pack(pady=12,padx=10)
+   
+   btnLogin = ctk.CTkButton(master=frame,text='Belépés',width=200, command=loginFunc)
+   btnLogin.pack(pady=12,padx=10)
+
+   btnReg = ctk.CTkButton(master=frame,text='Regisztráció',width=200)
+   btnReg.pack(pady=12,padx=10)
+
+   login.mainloop()
 
 async def main():   
    await db.initDB()
-   initApplication()
+   showLogin()
 
 asyncio.run(main())

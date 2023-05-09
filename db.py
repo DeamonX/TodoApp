@@ -14,10 +14,9 @@ querry = ""
 
 
 # Functions
-
 async def initDB():   # Init database on application start.
     c.execute("SHOW DATABASES LIKE '"+ DB_NAME+"'")
-    if c.fetchone() == [] : await createDatabase()    # Check if DB 'todoapp' exits
+    if c.fetchall() == [] : await createDatabase()    # Check if DB 'todoapp' exits
     else : db.database = DB_NAME   # Set DB to 'todoapp'
 
 def readExistingDB():   # Get data of user logged in 
@@ -29,7 +28,7 @@ async def createDatabase():   # Create table because fetch returned with empty a
     db.database = DB_NAME   # Set DB to 'todoapp'
     
     c.execute(CREATE_USERS_TABLE)   # Create users table
-    c.execute(CREATE_TASKS_TABLE)   # Create tasks table
+    c.execute(CREATE_TASKS_TABLE)   # Create tasks tablcleare
     c.execute(INSERT_ADMIN_USER)    # Insert Admin user for testing
 
     db.commit()
@@ -39,8 +38,7 @@ def closeConnection():  # Close connection
 
 def login(email:str, password:str): # Try to login with user
     c.execute("select 1 from users where email = '"+email+"' and password = '"+password+"';")
-    print("select 1 from users where email = '"+email+"' and password = '"+password+"';")
-    if c.fetchone == []: return 0
+    if c.fetchall() == []: return 0
     else : return getUserData(email)
 
 def getUserData(email:str):
