@@ -34,7 +34,7 @@ def closeConnection():  # Close connection
     db.close()
 
 def register(email:str,password:str):
-    c.execute("INSERT INTO users (email,username,password) VALUES ('"+email+"','"+email+"','"+password+"')';")
+    c.execute("INSERT INTO users (email,username,password) VALUES ('"+email+"','"+email+"','"+password+"');")
     db.commit()
 
 def login(email:str, password:str): # Try to login with user

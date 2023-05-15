@@ -34,7 +34,7 @@ def showRegister():
     pwCheck= ctk.CTkEntry(master=frame,placeholder_text="Jelszó mégegyszer",show="*",width=200)
     pwCheck.pack(pady=12,padx=10)
     
-    btnRegister = ctk.CTkButton(master=frame,text='Regisztáció',width=200, command=registerFunc)
+    btnRegister = ctk.CTkButton(master=frame,text='Regisztáció0',width=200, command=registerFunc)
     btnRegister.pack(pady=12,padx=10)
 
     register.mainloop()
